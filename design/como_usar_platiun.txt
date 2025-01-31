@@ -1,0 +1,6 @@
+Após ter criado seu arquivo .uml e possuir o arquivo plantuml.jar na mesma pasta, 
+execute o seguinte comando para gerar a saída na pasta out:
+
+
+java -jar plantuml.jar -o out class-diagram.plantuml
+Certifique-se de que a pasta out existe ou o PlantUML irá criá-la automaticamente.
