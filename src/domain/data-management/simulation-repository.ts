@@ -2,6 +2,7 @@ import { SimulationRepositoryI } from "@/adapter/interfaces/simulation-repositor
 import { Simulation } from "./Entities/simulation";
 import { SimulationParameters } from "./Entities/simulation-parameters";
 
+
 export class SimulationRepositoryLocalStorage implements SimulationRepositoryI {
   private storageKey = "simulations";
 
