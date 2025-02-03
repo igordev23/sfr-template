@@ -49,11 +49,14 @@ class Table {
      * @param aluno - O aluno que deseja ocupar a mesa.
      * @throws Erro caso o aluno já esteja na mesa.
      */
-    ocuparMesa(aluno: Aluno) {
-        if (this.verificarAlunoNaMesa(aluno) === undefined) {
-            this.alunoNaMesa.push(aluno);
-        } else {
-            throw new Error("O aluno já está na mesa.");
+    ocuparMesa(aluno : Aluno){
+        if(this.mesaOcupada==this.quantidadeMaxima){
+            throw Error('Todas as mesas estão ocupadas.')
+        }else{
+            if(this.verificarAlunoNaMesa(aluno) == undefined){
+                this.alunoNaMesa.push(aluno);
+                this.mesaOcupada++
+            }else{throw Error("O aluno já está na mesa.")}
         }
     }
 
@@ -67,7 +70,7 @@ class Table {
             for (let i = 0; i < this.alunoNaMesa.length; i++) {
                 if (this.alunoNaMesa[i] === aluno) {
                     this.alunoNaMesa.splice(i, 1);
-                    return;
+                    this.mesaOcupada--
                 }
             }
         } else {
