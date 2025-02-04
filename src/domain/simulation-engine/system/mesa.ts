@@ -9,13 +9,13 @@ class Table {
     alunoNaMesa: Aluno[];
     
     /** Número máximo de alunos que podem ocupar a mesa */
-    quantidadeMaxima: number;
+    quantidadeMaxima: any;
     
     /** Número de mesas ocupadas no momento */
     mesaOcupada: number;
     
     /** Tempo máximo que um aluno pode permanecer na mesa (em minutos) */
-    tempoDePermanencia: number;
+    tempoDePermanencia: any;
 
     /**
      * Construtor da classe Table.
@@ -23,11 +23,11 @@ class Table {
      * @param mesasOcupadas - Número de mesas já ocupadas.
      * @param tempoDePermanencia - Tempo máximo de permanência dos alunos na mesa.
      */
-    constructor(numeroDeMesa: number, mesasOcupadas: number, tempoDePermanencia: number) {
+    constructor() {
         this.alunoNaMesa = [];
-        this.quantidadeMaxima = numeroDeMesa;
-        this.mesaOcupada = mesasOcupadas;
-        this.tempoDePermanencia = tempoDePermanencia;
+        this.quantidadeMaxima = document.getElementById("tableLimit") as HTMLInputElement;
+        this.mesaOcupada = this.quantidadeMaxima - this.alunoNaMesa.length;
+        this.tempoDePermanencia = document.getElementById("tableTime") as HTMLInputElement;
     }
 
     /**
