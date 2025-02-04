@@ -9,13 +9,13 @@ class Table {
     alunoNaMesa: Aluno[];
     
     /** Número máximo de alunos que podem ocupar a mesa */
-    quantidadeMaxima: any;
+    quantidadeMaxima: number;
     
     /** Número de mesas ocupadas no momento */
     mesaOcupada: number;
     
     /** Tempo máximo que um aluno pode permanecer na mesa (em minutos) */
-    tempoDePermanencia: any;
+    tempoDePermanencia: number;
 
     /**
      * Construtor da classe Table.
@@ -25,9 +25,9 @@ class Table {
      */
     constructor() {
         this.alunoNaMesa = [];
-        this.quantidadeMaxima = document.getElementById("tableLimit") as HTMLInputElement;
-        this.mesaOcupada = this.quantidadeMaxima - this.alunoNaMesa.length;
-        this.tempoDePermanencia = document.getElementById("tableTime") as HTMLInputElement;
+        this.quantidadeMaxima = 0;
+        this.mesaOcupada = 0;
+        this.tempoDePermanencia = 0;
     }
 
     /**
@@ -77,4 +77,14 @@ class Table {
             throw new Error('O aluno não está na mesa.');
         }
     }
+
+    setTMPNM(tMPNM:number){
+        this.tempoDePermanencia = tMPNM;
+    }
+
+    setLM(lM:number){
+        this.quantidadeMaxima = lM
+    }
 };
+
+
