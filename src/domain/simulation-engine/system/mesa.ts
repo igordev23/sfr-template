@@ -26,7 +26,7 @@ class Table {
     constructor() {
         this.alunoNaMesa = [];
         this.quantidadeMaxima = 0;
-        this.mesaOcupada = 0;
+        this.mesaOcupada = 0
         this.tempoDePermanencia = 0;
     }
 
@@ -86,5 +86,3 @@ class Table {
         this.quantidadeMaxima = lM
     }
 };
-
-
