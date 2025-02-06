@@ -78,7 +78,7 @@ class Table {
         }
     }
 
-    setTMPNM(tMPNM:number){
+    setTMPNM(tMPNM:number){;
         this.tempoDePermanencia = tMPNM;
     }
 
