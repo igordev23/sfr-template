@@ -28,7 +28,7 @@ export class FilaInterna {
         // A quantidade atual de alunos só é incrementada depois de adicionar um aluno.
         this.alunos.push(aluno);
         this.quantidadeAtual++;
-        console.log(`Aluno adicionado à fila interna às ${aluno.getArrivalTime().toLocaleTimeString()}`);
+        console.log(`Aluno adicionado à fila interna às ${aluno.getArrivalTime().toLocaleString()}`);
     }
 
     /**
@@ -44,7 +44,7 @@ export class FilaInterna {
         const alunoRemovido = this.alunos.shift();
         if (alunoRemovido) {
             this.quantidadeAtual--;
-            console.log(`Aluno removido da fila interna às ${alunoRemovido.getArrivalTime().toLocaleTimeString()}`);
+            console.log(`Aluno removido da fila interna às ${alunoRemovido.getArrivalTime().toLocaleString()}`);
         }
 
         return alunoRemovido;
@@ -63,7 +63,7 @@ export class FilaInterna {
         }
 
         this.alunos.forEach((aluno, index) => {
-            console.log(`${index + 1}. Chegada: ${aluno.getArrivalTime().toLocaleTimeString()}`);
+            console.log(`${index + 1}. Chegada: ${aluno.getArrivalTime().toLocaleString()}`);
         });
     }
 

@@ -12,22 +12,21 @@ export class FilaExterna {
      * O aluno é criado no momento da adição e recebe um horário de chegada.
      * Em caso de erro, lança uma exceção informando que a adição falhou.
      */
-    adicionarAluno(): void {
-        try {
-            // Cria uma nova instância da classe Aluno, que representará um aluno na fila.
-            const aluno = new Aluno();
+    adicionarAlunos(quantidadeDeAlunos: number): void {
+        if (quantidadeDeAlunos <= 0 || isNaN(quantidadeDeAlunos)) {
+            throw new Error("Quantidade de alunos inválida. Deve ser um número positivo.");
+        }
 
-            // Adiciona o aluno recém-criado ao array `alunos`.
-            this.alunos.push(aluno);
+        for (let i = 0; i < quantidadeDeAlunos; i++) {
+            let novoAluno = new Aluno(); // Cria uma nova instância de Aluno
+            this.alunos.push(novoAluno); // Adiciona à fila
 
-            // Exibe no console a confirmação da adição, incluindo o horário de chegada.
-            console.log(`Aluno adicionado às ${aluno.getArrivalTime().toLocaleTimeString()}`);
-        } catch (error) {
-            // Caso ocorra algum erro no processo de adição, lança uma exceção informando o problema.
-            throw new Error("Erro ao adicionar aluno à fila externa.");
+            // Exibe a mensagem de adição com a data formatada
+            console.log(`Aluno adicionado à fila externa. Chegada: ${novoAluno.getArrivalTime().toLocaleString("pt-BR")}`);
         }
     }
-
+    
+   
     /**
      * Remove um aluno específico da fila externa.
      * Se a fila estiver vazia, um erro será lançado informando que não há alunos para remover.
@@ -44,7 +43,7 @@ export class FilaExterna {
 
             for (let i = 0; i < this.alunos.length; i++) {
                 if (this.alunos[i] === aluno) {
-                    console.log(`Aluno removido às ${aluno.getArrivalTime().toLocaleTimeString()}`);
+                    console.log(`Aluno removido às ${aluno.getArrivalTime().toLocaleString()}`);
                     return this.alunos.splice(i, 1)[0];
                 }
             }
@@ -73,7 +72,7 @@ export class FilaExterna {
             }
 
             for (let i = 0; i < this.alunos.length; i++) {
-                console.log(`${i + 1}. Chegada: ${this.alunos[i].getArrivalTime().toLocaleTimeString()}`);
+                console.log(`${i + 1}. Chegada: ${this.alunos[i].getArrivalTime().toLocaleString()}`);
             }
         } catch (error) {
             // Caso ocorra um erro ao listar os alunos, exibe a mensagem de erro no console.
@@ -102,5 +101,5 @@ export class FilaExterna {
             return 0;
         }
     }
+    
 }
-
