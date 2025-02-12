@@ -95,4 +95,5 @@ export class FilaInterna {
 
         this.quantidadeMax = novaQuantidadeMax;
     }
+    
 }
