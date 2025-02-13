@@ -4,7 +4,7 @@ import { Aluno } from "./aluno";
 /**
  * Classe Table representa uma mesa onde alunos podem se sentar.
  */
-class Table {
+export class Table {
     /** Lista de alunos atualmente na mesa */
     private alunoNaMesa: Aluno[];
 
