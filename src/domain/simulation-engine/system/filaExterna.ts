@@ -56,7 +56,7 @@ export class FilaExterna {
      * Exibe a ordem de chegada de cada aluno no console.
      * Se a fila estiver vazia, lança um erro informando que não há alunos na fila.
      */
-    listarAlunos(): Aluno[] {
+    listarAluno(): Aluno[] {
         if (this.alunos.length === 0) {
             console.warn("Nenhum aluno na fila.");
         }
@@ -68,7 +68,7 @@ export class FilaExterna {
      * Se a fila estiver vazia, lança um erro informando que não há alunos na fila.
      * @returns O número total de alunos na fila. Se houver erro, retorna 0.
      */
-    quantidadeAlunos(): number {
+    quantidadeAluno(): number {
         try {
             // Verifica se a fila está vazia antes de contar os alunos.
             if (this.alunos.length === 0) {
