@@ -6,7 +6,7 @@ import { Aluno } from "./aluno"
  * Representa um atendimento realizado para um aluno. A classe gerencia o estado do atendimento,
  * o aluno sendo atendido, o tempo médio do atendimento e o status (ativo ou inativo).
  */
-class Atendimento {
+export class Atendimento {
     aluno: Aluno | undefined; // Aluno atualmente sendo atendido
     tempoMedio: number; // Tempo médio do atendimento em minutos
     status: boolean; // Indica se o atendimento está ativo (true) ou inativo (false)
