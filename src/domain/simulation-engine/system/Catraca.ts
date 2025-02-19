@@ -55,14 +55,14 @@ export class Catraca {
      * @param aluno - O aluno a ser registrado na catraca.
      * @throws Lança um erro se já houver um aluno na catraca.
      */
-    adicionarAluno(aluno?: Aluno): void {
+    adicionarAluno(aluno: Aluno): void {
         if (!aluno) {
             throw new Error("Aluno inválido.");
         }
         if (this.aluno) {
             throw new Error("Já existe um aluno na catraca");
         }
-    
+
         this.aluno = aluno;
         this.status = false;
         console.log("Aluno adicionado à catraca. Catraca BLOQUEADA.");
@@ -73,14 +73,18 @@ export class Catraca {
      * Se não houver aluno registrado, lança um erro.
      * @throws Lança um erro se não houver aluno para remover.
      */
-    removerAluno(): void {
+    removerAluno(): Aluno {
+        let alunoNaCatraca: Aluno;
         if (!this.aluno) {
             throw new Error("Não há aluno na catraca, impossível remover.");
         }
 
+        alunoNaCatraca = this.aluno
         console.log("Aluno removido da catraca.");
         this.aluno = null; // Agora a catraca está vazia
         this.status = true; // Catraca desbloqueia ao remover aluno
+
         console.log("Catraca LIBERADA.");
+        return alunoNaCatraca;
     }
 }
