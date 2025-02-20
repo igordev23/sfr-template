@@ -50,22 +50,16 @@ export class FilaInterna {
         return alunoRemovido;
     }
 
-    /**
-     * Lista todos os alunos presentes na fila interna.
-     * Se a fila estiver vazia, exibe uma mensagem informando que não há alunos na fila.
-     */
-    public listarAlunos(): void {
-        console.log(`Quantidade atual de alunos na fila: ${this.getQuantidadeAtual()}`);
-
-        if (this.quantidadeAtual === 0) {
-            console.log("Nenhum aluno na fila.");
-            return;
-        }
-
-        this.alunos.forEach((aluno, index) => {
-            console.log(`${index + 1}. Chegada: ${aluno.getArrivalTime().toLocaleTimeString()}`);
-        });
+     /**
+    * Lista todos os alunos presentes na fila interna.
+    * Se a fila estiver vazia, exibe uma mensagem informando que não há alunos na fila.
+    */
+   listarAlunos(): Aluno[] {
+    if (this.alunos.length === 0) {
+        console.warn("Nenhum aluno na fila.");
     }
+    return this.alunos;
+}
 
     /**
      * Retorna a quantidade total de alunos na fila interna.
