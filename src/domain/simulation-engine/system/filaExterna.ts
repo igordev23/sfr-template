@@ -12,22 +12,21 @@ export class FilaExterna {
      * O aluno é criado no momento da adição e recebe um horário de chegada.
      * Em caso de erro, lança uma exceção informando que a adição falhou.
      */
-    adicionarAluno(): void {
-        try {
-            // Cria uma nova instância da classe Aluno, que representará um aluno na fila.
-            const aluno = new Aluno();
+    adicionarAluno(quantidadeDeAlunos: number): void {
+        if (quantidadeDeAlunos <= 0 || isNaN(quantidadeDeAlunos)) {
+            throw new Error("Quantidade de alunos inválida. Deve ser um número positivo.");
+        }
 
-            // Adiciona o aluno recém-criado ao array `alunos`.
-            this.alunos.push(aluno);
+        for (let i = 0; i < quantidadeDeAlunos; i++) {
+            let novoAluno = new Aluno(); // Cria uma nova instância de Aluno
+            this.alunos.push(novoAluno); // Adiciona à fila
 
-            // Exibe no console a confirmação da adição, incluindo o horário de chegada.
-            console.log(`Aluno adicionado às ${aluno.getArrivalTime().toLocaleTimeString()}`);
-        } catch (error) {
-            // Caso ocorra algum erro no processo de adição, lança uma exceção informando o problema.
-            throw new Error("Erro ao adicionar aluno à fila externa.");
+            // Exibe a mensagem de adição com a data formatada
+            console.log(`Aluno adicionado à fila externa. Chegada: ${novoAluno.getArrivalTime().toLocaleString("pt-BR")}`);
         }
     }
-
+    
+   
     /**
      * Remove um aluno específico da fila externa.
      * Se a fila estiver vazia, um erro será lançado informando que não há alunos para remover.
@@ -35,26 +34,21 @@ export class FilaExterna {
      * @param aluno - Instância do aluno a ser removido.
      * @returns Retorna o aluno removido ou `undefined` caso ocorra um erro.
      */
-    removerAluno(aluno: Aluno): Aluno | undefined {
-        try {
-            // Verifica se a fila está vazia antes de tentar remover um aluno.
-            if (this.alunos.length === 0) {
-                throw new Error("A fila está vazia. Nenhum aluno para remover.");
-            }
-
-            for (let i = 0; i < this.alunos.length; i++) {
-                if (this.alunos[i] === aluno) {
-                    console.log(`Aluno removido às ${aluno.getArrivalTime().toLocaleTimeString()}`);
-                    return this.alunos.splice(i, 1)[0];
-                }
-            }
-
-            throw new Error("Aluno não encontrado na fila.");
-        } catch (error) {
-            // Caso ocorra um erro durante a remoção, exibe a mensagem de erro no console.
-            console.error(error);
-            return undefined; // Retorna `undefined` para indicar falha na remoção.
+    removerAluno(): Aluno | undefined {
+        if (this.alunos.length === 0) {
+            console.error("A fila está vazia. Nenhum aluno para remover.");
+            return undefined;
         }
+
+        // Ordena a fila com base no arrivalTime e remove o primeiro aluno
+        this.alunos.sort((a, b) => a.getArrivalTime() - b.getArrivalTime());
+        const alunoRemovido = this.alunos.shift();
+
+        if (alunoRemovido) {
+            console.log(`Aluno removido às ${new Date(alunoRemovido.getArrivalTime()).toLocaleString()}`);
+        }
+
+        return alunoRemovido;
     }
 
     /**
@@ -62,23 +56,11 @@ export class FilaExterna {
      * Exibe a ordem de chegada de cada aluno no console.
      * Se a fila estiver vazia, lança um erro informando que não há alunos na fila.
      */
-    listarAlunos(): void {
-        try {
-            // Exibe um cabeçalho no console para indicar que os alunos estão sendo listados.
-            console.log("Alunos na fila externa:");
-
-            // Verifica se a fila está vazia antes de listar os alunos.
-            if (this.alunos.length === 0) {
-                throw new Error("Nenhum aluno na fila.");
-            }
-
-            for (let i = 0; i < this.alunos.length; i++) {
-                console.log(`${i + 1}. Chegada: ${this.alunos[i].getArrivalTime().toLocaleTimeString()}`);
-            }
-        } catch (error) {
-            // Caso ocorra um erro ao listar os alunos, exibe a mensagem de erro no console.
-            console.error(error);
+    listarAluno(): Aluno[] {
+        if (this.alunos.length === 0) {
+            console.warn("Nenhum aluno na fila.");
         }
+        return this.alunos;
     }
 
     /**
@@ -86,7 +68,7 @@ export class FilaExterna {
      * Se a fila estiver vazia, lança um erro informando que não há alunos na fila.
      * @returns O número total de alunos na fila. Se houver erro, retorna 0.
      */
-    quantidadeAlunos(): number {
+    quantidadeAluno(): number {
         try {
             // Verifica se a fila está vazia antes de contar os alunos.
             if (this.alunos.length === 0) {
@@ -102,5 +84,5 @@ export class FilaExterna {
             return 0;
         }
     }
+    
 }
-

@@ -1,22 +1,20 @@
-import { Aluno } from "./aluno"; // Importa a classe Aluno
+import { Aluno } from "./aluno";
 
 /**
  * Classe que representa uma Catraca, responsável por controlar a passagem de alunos.
  */
 export class Catraca {
-    private aluno?: Aluno; // Aluno atualmente na catraca (opcional)
+    private aluno: Aluno | null = null; // Inicia como null para evitar undefined
     private status: boolean; // Status da catraca (true = aberta, false = bloqueada)
     private tempoMedioDigitacao: number; // Tempo médio de digitação do aluno
 
     /**
      * Construtor da classe Catraca.
-     * @param aluno - O aluno a ser registrado na catraca (opcional).
      * @param status - O status inicial da catraca (padrão: aberta).
      * @param tempoMedioDigitacao - Tempo médio de digitação do aluno (padrão: 0 segundos).
      */
-    constructor(aluno?: Aluno, status: boolean = true, tempoMedioDigitacao: number = 0) {
-        this.aluno = aluno;
-        this.status = aluno ? false : status; // Se houver aluno, a catraca começa bloqueada
+    constructor(status: boolean = true, tempoMedioDigitacao: number = 0) {
+        this.status = status;
         this.tempoMedioDigitacao = tempoMedioDigitacao;
     }
 
@@ -25,7 +23,7 @@ export class Catraca {
      * @returns O aluno se presente, ou null se não houver aluno.
      */
     getAluno(): Aluno | null {
-        return this.aluno ?? null;
+        return this.aluno;
     }
 
     /**
@@ -46,14 +44,9 @@ export class Catraca {
 
     /**
      * Verifica se há um aluno presente na catraca e exibe uma mensagem no console.
-     * @param aluno - O aluno a ser verificado (não é utilizado dentro do método).
      */
-    verificarAluno(aluno: Aluno): void {
-        if (this.aluno) {
-            console.log("Aluno presente na catraca");
-        } else {
-            console.log("Nenhum aluno presente");
-        }
+    verificarAluno(): void {
+        console.log(this.aluno ? "Aluno presente na catraca" : "Nenhum aluno presente");
     }
 
     /**
@@ -62,13 +55,17 @@ export class Catraca {
      * @param aluno - O aluno a ser registrado na catraca.
      * @throws Lança um erro se já houver um aluno na catraca.
      */
-    adicionarAluno(aluno: Aluno): void {
+    adicionarAluno(aluno?: Aluno): void {
+        if (!aluno) {
+            throw new Error("Aluno inválido.");
+        }
         if (this.aluno) {
             throw new Error("Já existe um aluno na catraca");
         }
+    
         this.aluno = aluno;
-        this.status = false; // Catraca bloqueia ao adicionar aluno
-        console.log(`Aluno ${JSON.stringify(aluno)} adicionado à catraca. Catraca BLOQUEADA.`);
+        this.status = false;
+        console.log("Aluno adicionado à catraca. Catraca BLOQUEADA.");
     }
 
     /**
@@ -81,8 +78,8 @@ export class Catraca {
             throw new Error("Não há aluno na catraca, impossível remover.");
         }
 
-        console.log(`Aluno ${JSON.stringify(this.aluno)} removido da catraca.`);
-        this.aluno = undefined;
+        console.log("Aluno removido da catraca.");
+        this.aluno = null; // Agora a catraca está vazia
         this.status = true; // Catraca desbloqueia ao remover aluno
         console.log("Catraca LIBERADA.");
     }
