@@ -1,9 +1,9 @@
 import { Aluno } from "./aluno";
 
 export class FilaInterna {
-    private alunos: Aluno[];
-    private quantidadeMax: number;
-    private quantidadeAtual: number;
+     alunos: Aluno[];
+     quantidadeMax: number;
+     quantidadeAtual: number;
 
     /**
      * Cria uma nova instância da fila interna com uma capacidade máxima definida.

@@ -1,3 +1,4 @@
+import { ReceiptRussianRuble } from "lucide-react";
 import { Aluno } from "./aluno";
 
 
@@ -6,13 +7,13 @@ import { Aluno } from "./aluno";
  */
 export class Table {
     /** Lista de alunos atualmente na mesa */
-    private alunoNaMesa: Aluno[];
+     alunoNaMesa: Aluno[];
 
     /** Número máximo de alunos que podem ocupar a mesa */
-    private quantidadeMaxima: number;
+     quantidadeMaxima: number;
 
     /** Número de mesas ocupadas no momento */
-    private mesaOcupada: number;
+     mesaOcupada: number;
 
     /** Tempo máximo que um aluno pode permanecer na mesa (em minutos) */
     tempoDePermanencia: number;
@@ -28,15 +29,18 @@ export class Table {
         this.tempoDePermanencia = 0;
     }
 
+
+
+
     /**
      * Verifica se um aluno está presente na mesa.
      * @param aluno - O aluno a ser verificado.
      * @returns O aluno encontrado ou undefined caso ele não esteja na mesa.
      */
-    verificarAlunoNaMesa(aluno: Aluno): Aluno | undefined {
+    verificarAlunoNaMesa(aluno: Aluno): number{
         for (let i = 0; i < this.alunoNaMesa.length; i++) {
             if (this.alunoNaMesa[i] === aluno) {
-                return aluno;
+                return i;
             }
         }
         return undefined;
@@ -47,12 +51,12 @@ export class Table {
      * @param aluno - O aluno que deseja ocupar a mesa.
      * @throws Erro caso todas as mesas estejam ocupadas ou o aluno já esteja na mesa.
      */
-    ocuparMesa(aluno: Aluno | undefined) {
+    ocuparMesa(aluno: Aluno) : void {
         if (this.mesaOcupada == this.quantidadeMaxima) {
             throw Error('Todas as mesas estão ocupadas.');
         } else {
-            if (this.verificarAlunoNaMesa(aluno!) == undefined) {
-                this.alunoNaMesa.push(aluno!);
+            if (this.verificarAlunoNaMesa(aluno) == undefined) {
+                this.alunoNaMesa.push(aluno);
                 this.mesaOcupada++;
             } else {
                 throw Error('O aluno já está na mesa.');
@@ -61,39 +65,19 @@ export class Table {
     }
 
     /**
-     * Descobre a posição do aluno com menor tempo de permanência na mesa.
-     * @returns A posição do aluno com menor tempo de permanência ou null caso a mesa esteja vazia.
-     */
-    descobrirOLigeirinho(): number | null {
-        if (this.alunoNaMesa.length === 0) {
-            return null;
-        }
-
-        let posicaoDoLigeirinho: number = 0; // Índice do primeiro aluno
-        for (let posicaoAtual = 1; posicaoAtual < this.alunoNaMesa.length; posicaoAtual++) {
-            if (this.alunoNaMesa[posicaoAtual].getTempoPermanencia()! < this.alunoNaMesa[posicaoDoLigeirinho].getTempoPermanencia()!) {
-                posicaoDoLigeirinho = posicaoAtual;
-            }
-        }
-        return posicaoDoLigeirinho;
-    }
-
-    /**
-     * Remove um aluno da mesa, dando preferência ao que permaneceu por menos tempo.
+     * Remove um aluno da mesa.
      * @throws Erro caso não haja alunos na mesa ou ocorra um erro ao tentar remover.
      */
-    liberarMesa() {
+    liberarMesa(alunoQueVaiSair: Aluno) : Aluno {
         if (this.alunoNaMesa.length == 0) {
             throw Error('Não há alunos na mesa.');
         }
+        let posicaoDoAluno = this.verificarAlunoNaMesa(alunoQueVaiSair)
 
-        let alunoQueVaiSair: number | null = this.descobrirOLigeirinho();
-        if (alunoQueVaiSair == null || this.alunoNaMesa[alunoQueVaiSair] == null) {
-            throw Error('Erro ao remover aluno: referência inválida.');
-        }
-
-        this.alunoNaMesa.splice(alunoQueVaiSair, 1);
+        this.alunoNaMesa.splice(posicaoDoAluno, 1);
         this.mesaOcupada--;
+        
+        return alunoQueVaiSair
     }
 
     /**
