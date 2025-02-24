@@ -86,7 +86,7 @@ export class Atendimento {
      * @param aluno1 - O aluno que será removido.
      * @throws Erro caso o aluno informado não esteja sendo atendido ou se não houver aluno sendo atendido.
      */
-    removerAluno(aluno1: Aluno): void {
+    removerAluno(aluno1: Aluno): Aluno {
         if (this.aluno != aluno1) {
             throw Error("Este aluno não está sendo atendido.");
         }
@@ -94,6 +94,8 @@ export class Atendimento {
             throw Error("Não há aluno sendo atendido.");
         }
         this.aluno = undefined;
+
+        return aluno1
     }
 }
 
