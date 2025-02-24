@@ -9,7 +9,7 @@ class EventoAtendimentoParaMesa extends Evento {
     }
 
     /**
-     * Processa o evento, movendo um aluno da fila interna para o atendimento.
+     * Processa o evento, movendo um aluno do atendimento para a mesa.
      */
     processaEvento(): void {
         console.log(`Processando evento: Aluno movido da fila interna para o atendimento no instante ${this.getTimestamp()}`);
