@@ -14,7 +14,7 @@ export class EventoFilaExternaParaCatraca extends Evento {
      * Processa o evento, movendo um aluno da fila externa para a catraca.
      */
     processaEvento(): void {
-        console.log(`Processando evento: Aluno adicionado a filaexterna; primeiro aluno qeu chegou, adicionado a catraca no instante: ${this.getTimestamp()}`);
+        console.log(`Processando evento: Aluno movido da fila externa para a catraca no instante ${this.getTimestamp()}`);
         this.refeitorio.chegadaAluno();
     }
 }
