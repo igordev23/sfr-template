@@ -12,7 +12,7 @@ export class FilaExterna {
      * O aluno é criado no momento da adição e recebe um horário de chegada.
      * Em caso de erro, lança uma exceção informando que a adição falhou.
      */
-    adicionarAluno(quantidadeDeAlunos: number): void {
+    adicionarAluno(quantidadeDeAlunos: number, aluno: Aluno): Aluno | void{
         if (quantidadeDeAlunos <= 0 || isNaN(quantidadeDeAlunos)) {
             throw new Error("Quantidade de alunos inválida. Deve ser um número positivo.");
         }
@@ -25,8 +25,7 @@ export class FilaExterna {
             console.log(`Aluno adicionado à fila externa. Chegada: ${novoAluno.getArrivalTime().toLocaleString("pt-BR")}`);
         }
     }
-    
-   
+
     /**
      * Remove um aluno específico da fila externa.
      * Se a fila estiver vazia, um erro será lançado informando que não há alunos para remover.
@@ -34,7 +33,7 @@ export class FilaExterna {
      * @param aluno - Instância do aluno a ser removido.
      * @returns Retorna o aluno removido ou `undefined` caso ocorra um erro.
      */
-    removerAluno(): Aluno | undefined {
+    removerAluno(): Aluno {
         if (this.alunos.length === 0) {
             console.error("A fila está vazia. Nenhum aluno para remover.");
             return undefined;
