@@ -1,32 +1,76 @@
-**Use your preferred IDE**
+# Cafeteria Flow Simulator
 
-If you want to work locally using your own IDE, you can clone this repo and push changes. Pushed changes will also be reflected in Lovable.
+A simulation project focused on understanding and improving the flow of people in a cafeteria. The main goal is to analyze the current process, identify bottlenecks, and propose improvements to enhance service quality and customer satisfaction.
 
-The only requirement is having Node.js & npm installed - [install with nvm](https://github.com/nvm-sh/nvm#installing-and-updating)
+## Project Overview
 
-Follow these steps:
+This simulator models the cafeteria workflow, providing insights into areas where efficiency can be improved. It helps visualize the movement of customers, wait times, and service bottlenecks through event-driven simulations.
 
-```sh
-# Step 1: Clone the repository using the project's Git URL.
-git clone <YOUR_GIT_URL>
+## Features
 
-# Step 2: Navigate to the project directory.
-cd <YOUR_PROJECT_NAME>
+- Simulates the flow of customers in a cafeteria
+- Analyzes bottlenecks and service delays
+- Provides insights for process optimization
+- Event-driven architecture for realistic simulation
 
-# Step 3: Install the necessary dependencies.
-npm i
+## System Diagrams
 
-# Step 4: Start the development server with auto-reloading and an instant preview.
-npm run dev
-```
+### System Flow Diagram
+Illustrates the overall structure of the simulation, from customer entry to service completion.
 
-## What technologies are used for this project?
+![System Flow Diagram](path/to/system-flow-diagram.png)
 
-This project is built with .
+### Event Diagram
+Shows the sequence of events and interactions between customers and the system.
+
+![Event Diagram](design/out/system-class-diagram.drawio.png)
+
+## Getting Started
+
+### Prerequisites
+Ensure you have Node.js and npm installed. You can install Node.js using [nvm](https://github.com/nvm-sh/nvm#installing-and-updating).
+
+### Installation
+
+1. Clone the repository:
+
+   ```sh
+   git clone <YOUR_GIT_URL>
+   ```
+
+2. Navigate to the project directory:
+
+   ```sh
+   cd <YOUR_PROJECT_NAME>
+   ```
+
+3. Install dependencies:
+
+   ```sh
+   npm i
+   ```
+
+4. Run the development server:
+
+   ```sh
+   npm run dev
+   ```
+
+## Technologies Used
+
+This project is built using:
 
 - Vite
 - TypeScript
 - React
 - shadcn-ui
 - Tailwind CSS
+
+## Contributing
+
+Contributions are welcome! Feel free to open issues or submit pull requests to improve the simulator.
+
+## License
+
+This project is licensed under the MIT License.
 
