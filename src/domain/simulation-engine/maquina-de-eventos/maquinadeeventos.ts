@@ -6,12 +6,13 @@ export class MaquinaEventos {
     instanteDaSimulacao: number;
     observador: Observador = new Observador();
     instanteInicial: number;
+    eventosProcessados: number = 0; // Adiciona contador de eventos processados
 
     constructor(instanteInicial: number = 0) {
         this.instanteInicial = instanteInicial;
         this.instanteDaSimulacao = instanteInicial;
     }
-    
+
     /**
      * Processa todos os eventos da fila de eventos em ordem cronológica.
      */
@@ -23,6 +24,7 @@ export class MaquinaEventos {
             if (eventoAtual) {
                 this.instanteDaSimulacao = eventoAtual.getTimestamp();
                 eventoAtual.processaEvento();
+                this.eventosProcessados++; // Atualiza o contador a cada evento processado
             }
         }
 
