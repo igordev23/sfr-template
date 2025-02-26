@@ -1,6 +1,5 @@
 import { MetricOverTime, SimulationResults } from "@/domain/data-management/Entities/simulation-results";
 
-
 export class Observador {
     duracaoSimulacao: number;
     duracaoRealSimulacao: number;
@@ -24,20 +23,22 @@ export class Observador {
 
     public definirDuracaoSimulacao(tempoInicial: number, tempoFinal: number) {
         this.duracaoSimulacao = tempoFinal - tempoInicial;
-        if (this.duracaoSimulacao < 0) {
-            this.duracaoSimulacao = 0;
-        }
+        this.duracaoSimulacao = Math.max(this.duracaoSimulacao, 0);
+        console.log(`Duração da simulação: ${this.duracaoSimulacao}`);
     }
-    
 
     public computarResultados(): SimulationResults {
         if (this.duracaoSimulacao <= 0) {
             throw new Error('A duração da simulação deve ser maior que zero');
         }
 
-        const mediaTempoEspera = this.somatorioDosTemposDeEspera / this.tamanhosDaFila.length || 0;
+        const mediaTempoEspera = this.somatorioDosTemposDeEspera / (this.tamanhosDaFila.length || 1);
         const mediaFilaExterna = this.calcularMedia(this.filaExternaAoLongoDoTempo);
         const mediaFilaInterna = this.calcularMedia(this.filaInternaAoLongoDoTempo);
+
+        console.log("Resultados Computados:", {
+            mediaTempoEspera, mediaFilaExterna, mediaFilaInterna, ocupacaoMaximaMesas: this.ocupacaoMaximaMesas
+        });
 
         return new SimulationResults(
             this.filaInternaAoLongoDoTempo,
@@ -67,14 +68,12 @@ export class Observador {
     }
 
     public observarTamanhoFilas(filaInterna: number, filaExterna: number, ocupacaoMesas: number, tempo: number) {
-        // Criando instâncias de MetricOverTime para cada fila e ocupação de mesas
         this.filaInternaAoLongoDoTempo.push(new MetricOverTime(tempo, filaInterna));
         this.filaExternaAoLongoDoTempo.push(new MetricOverTime(tempo, filaExterna));
         this.ocupacaoMesasAoLongoDoTempo.push(new MetricOverTime(tempo, ocupacaoMesas));
-    
-        // Atualizando a ocupação máxima de mesas se necessário
-        if (ocupacaoMesas > this.ocupacaoMaximaMesas) {
-            this.ocupacaoMaximaMesas = ocupacaoMesas;
-        }
+
+        this.ocupacaoMaximaMesas = Math.max(this.ocupacaoMaximaMesas, ocupacaoMesas);
+
+        console.log("Métricas observadas:", { filaInterna, filaExterna, ocupacaoMesas, tempo });
     }
 }

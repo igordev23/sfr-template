@@ -1,4 +1,5 @@
-import { Aluno } from "./aluno"
+
+import { Aluno } from "./aluno";
 import { Refeitorio } from "./refeitorio";
 
 /**
