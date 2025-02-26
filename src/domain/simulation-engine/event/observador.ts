@@ -1,5 +1,5 @@
-import { ResultadosSimulacao, MetricOverTime } from "@/domain/simulator";
-import { error } from "console";
+import { MetricOverTime, SimulationResults } from "@/domain/data-management/Entities/simulation-results";
+
 
 export class Observador {
     duracaoSimulacao: number;
@@ -22,7 +22,15 @@ export class Observador {
         this.ocupacaoMesasAoLongoDoTempo = [];
     }
 
-    public computarResultados(): ResultadosSimulacao {
+    public definirDuracaoSimulacao(tempoInicial: number, tempoFinal: number) {
+        this.duracaoSimulacao = tempoFinal - tempoInicial;
+        if (this.duracaoSimulacao < 0) {
+            this.duracaoSimulacao = 0;
+        }
+    }
+    
+
+    public computarResultados(): SimulationResults {
         if (this.duracaoSimulacao <= 0) {
             throw new Error('A duração da simulação deve ser maior que zero');
         }
@@ -31,7 +39,7 @@ export class Observador {
         const mediaFilaExterna = this.calcularMedia(this.filaExternaAoLongoDoTempo);
         const mediaFilaInterna = this.calcularMedia(this.filaInternaAoLongoDoTempo);
 
-        return new ResultadosSimulacao(
+        return new SimulationResults(
             this.filaInternaAoLongoDoTempo,
             this.filaExternaAoLongoDoTempo,
             this.ocupacaoMesasAoLongoDoTempo,
@@ -46,7 +54,7 @@ export class Observador {
 
     private calcularMedia(medidas: MetricOverTime[]): number {
         if (medidas.length === 0) return 0;
-        const soma = medidas.reduce((total, m) => total + m.valor, 0);
+        const soma = medidas.reduce((total, m) => total + m.value, 0);
         return soma / medidas.length;
     }
 
@@ -69,4 +77,4 @@ export class Observador {
             this.ocupacaoMaximaMesas = ocupacaoMesas;
         }
     }
-}    
+}

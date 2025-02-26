@@ -8,36 +8,65 @@ import { Mesas } from "./mesa";
 
 
 export class Refeitorio {
-    distribuicaoNormal(arg0: number) {
-        throw new Error("Method not implemented.");
-    }
     private filaExterna: FilaExterna;
     private filaInterna: FilaInterna;
     private catraca: Catraca;
     private mesa: Mesas;
     private LFI: number;
     private LM: number;
+    private QAL: number;
+    private TMDM: number;
+    private TMPSC: number;
+    private TMPNM: number;
     private randomGenerators: RandomGeneratorI[];
-    private atendimento: Atendimento;  // Instância de Atendimento
+    private atendimento: Atendimento;
 
     constructor(
-        LFI: number,
-        private QAL: number,
-        LM: number,
-        private TMDM: number,
-        private TMPSC: number,
-        private TMPNM: number,
-        randomGenerators: RandomGeneratorI[] = [new GaussianRandom()] // Adicionando suporte para diferentes geradores de números aleatórios
+        LFI: number = 0,
+        QAL: number = 0,
+        LM: number = 0,
+        TMDM: number = 0,
+        TMPSC: number = 0,
+        TMPNM: number = 0,
+        randomGenerators: RandomGeneratorI[] = [new GaussianRandom()]
     ) {
         this.LFI = LFI;
+        this.QAL = QAL;
         this.LM = LM;
+        this.TMDM = TMDM;
+        this.TMPSC = TMPSC;
+        this.TMPNM = TMPNM;
+        this.randomGenerators = randomGenerators;
+
         this.filaExterna = new FilaExterna();
         this.filaInterna = new FilaInterna(this.LFI);
         this.catraca = new Catraca();
         this.mesa = new Mesas(this.LM);
-        this.randomGenerators = randomGenerators;
-        this.atendimento = new Atendimento(this);  // Inicializando Atendimento
+        this.atendimento = new Atendimento(this);
     }
+
+    public configurarParametros(
+        LFI: number,
+        QAL: number,
+        LM: number,
+        TMDM: number,
+        TMPSC: number,
+        TMPNM: number,
+        randomGenerators: RandomGeneratorI[] = [new GaussianRandom()]
+    ) {
+        this.LFI = LFI;
+        this.QAL = QAL;
+        this.LM = LM;
+        this.TMDM = TMDM;
+        this.TMPSC = TMPSC;
+        this.TMPNM = TMPNM;
+        this.randomGenerators = randomGenerators;
+
+        this.filaInterna = new FilaInterna(this.LFI);
+        this.mesa = new Mesas(this.LM);
+        console.log("Parâmetros do refeitório configurados.");
+    }
+
 
     chegadaAluno(matricula: number, distribuidor: RandomGeneratorI = this.randomGenerators[0]) {
         const aluno = new Aluno(matricula);
@@ -83,7 +112,8 @@ export class Refeitorio {
                         this.catraca.liberarCatraca();
                     }
 
-                    refeitorio.iniciarAtendimentoAluno();  // Usando a classe Atendimento para iniciar o atendimento
+                    this.iniciarAtendimentoAluno();
+                    // Usando a classe Atendimento para iniciar o atendimento
                 }
             }, tempoDigitacao * 1000); // Convertendo para segundos, multiplicando por 1000
         }
@@ -156,12 +186,3 @@ export class Refeitorio {
 
 
 
-// Instância de teste
-const refeitorio = new Refeitorio(5, 2, 3, 2000, 5000, 10000);
-
-// Simulando a chegada de alunos a cada 2 segundos
-setInterval(() => {
-    const matricula = Math.floor(Math.random() * 10000);
-    console.log(`Novo aluno chegando: Matrícula ${matricula}`);
-    refeitorio.chegadaAluno(matricula);
-}, 2000);

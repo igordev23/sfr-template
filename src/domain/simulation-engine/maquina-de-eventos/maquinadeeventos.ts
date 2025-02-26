@@ -1,32 +1,33 @@
 import { Evento } from "../event/evento";
-
-import { Observador } from "../event/observador";  // Importando a classe Observador
+import { Observador } from "../event/observador";  
 
 export class MaquinaEventos {
     eventos: Evento[] = [];
     instanteDaSimulacao: number;
-    observador: Observador = new Observador() // Adicionando o observador
+    observador: Observador = new Observador();
+    instanteInicial: number;
 
-    constructor(instanteInicial: number = 0,) {
+    constructor(instanteInicial: number = 0) {
+        this.instanteInicial = instanteInicial;
         this.instanteDaSimulacao = instanteInicial;
-        // Inicializando o observador
     }
-
+    
     /**
      * Processa todos os eventos da fila de eventos em ordem cronológica.
      */
     processaEventos(): void {
         while (this.eventos.length > 0) {
-            // Ordena os eventos pelo timestamp
             this.eventos.sort((a, b) => a.getTimestamp() - b.getTimestamp());
 
-            // Remove e processa o próximo evento
             const eventoAtual = this.eventos.shift();
             if (eventoAtual) {
                 this.instanteDaSimulacao = eventoAtual.getTimestamp();
                 eventoAtual.processaEvento();
             }
         }
+
+        // Definir duração da simulação ao final do processamento
+        this.observador.definirDuracaoSimulacao(this.instanteInicial, this.instanteDaSimulacao);
     }
 
     /**
