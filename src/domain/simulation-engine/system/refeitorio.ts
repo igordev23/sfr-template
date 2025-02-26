@@ -118,9 +118,24 @@ export class Refeitorio {
             }, tempoDigitacao * 1000); // Convertendo para segundos, multiplicando por 1000
         }
     }
+    
 
     iniciarAtendimentoAluno() {
         this.atendimento.iniciarAtendimentoAluno();
+    }
+
+    public ocuparMesa(aluno: Aluno): boolean {
+        if (this.mesa.ocuparMesa()) {
+            console.log(`Aluno ${aluno.getMatricula()} ocupou uma mesa.`);
+            return true;
+        }
+        console.log(`Aluno ${aluno.getMatricula()} não conseguiu uma mesa, aguardando.`);
+        return false;
+    }
+
+    public liberarMesa(): void {
+        this.mesa.liberarMesa();
+        console.log("Uma mesa foi liberada.");
     }
 
     // Métodos para obter o tamanho das filas

@@ -28,6 +28,12 @@ export class EventoAlunoNaMesa extends Evento {
     processaEvento(): void {
         console.log(`Aluno ${this.aluno.getMatricula()} sentou-se para comer.`);
 
+        // Tenta ocupar uma mesa no refeitório
+        if (!this.refeitorio.ocuparMesa(this.aluno)) {
+            console.error(`Aluno ${this.aluno.getMatricula()} não conseguiu ocupar uma mesa.`);
+            return;
+        }
+
         // Verifica se o método getTMPNM (Tempo Médio de Permanência na Mesa) está definido no refeitório
         if (typeof this.refeitorio.getTMPNM !== "function") {
             console.error("Erro: Método getTMPNM não está definido no refeitório.");
@@ -52,4 +58,3 @@ export class EventoAlunoNaMesa extends Evento {
         ));
     }
 }
-

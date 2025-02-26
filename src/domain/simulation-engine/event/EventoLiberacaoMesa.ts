@@ -1,4 +1,4 @@
-// Importa a classe Evento, que serve como base para o evento de liberação de mesa
+// // Importa a classe Evento, que serve como base para o evento de liberação de mesa
 import { Evento } from "./evento"; // Importa a classe Evento para herdar de sua funcionalidade
 import { Aluno } from "../system/aluno"; // Importa a classe Aluno para representar o aluno que liberou a mesa
 
@@ -16,8 +16,8 @@ export class EventoLiberacaoMesa extends Evento {
     processaEvento(): void {
         // Exibe no console que o aluno terminou sua refeição e liberou a mesa
         console.log(`Aluno ${this.aluno.getMatricula()} terminou a refeição e liberou uma mesa.`);
-        
-        // Libera uma mesa no refeitório utilizando o método da classe Mesas
-        this.refeitorio.getMesas().liberarMesa(); // Chama o método liberarMesa da classe Mesas
+
+        // Libera uma mesa no refeitório utilizando o método ocuparMesa
+        this.refeitorio.liberarMesa(); // Chama o método liberarMesa do refeitório
     }
 }
