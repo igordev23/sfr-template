@@ -16,14 +16,15 @@ This simulator models the cafeteria workflow, providing insights into areas wher
 ## System Diagrams
 
 ### System Flow Diagram
-Illustrates the overall structure of the simulation, from customer entry to service completion.
+
+Represents the class structure of the system, detailing the relationships and responsibilities of each component.
 
 ![System Flow Diagram](design/out/system-class-diagram.drawio.png)
 
 ### Event Diagram
 Shows the sequence of events and interactions between customers and the system.
 
-![Event Diagram](design/out/system-class-diagram.drawio.png)
+![Event Diagram](design/out/events-class-diagram.png)
 
 ## Getting Started
 
