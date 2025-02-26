@@ -1,5 +1,5 @@
-import { Refeitorio } from "../refeitorio";
-import { MaquinaEventos } from "../maquinadeeventos";
+import { Refeitorio } from "../system/refeitorio";
+import { MaquinaEventos } from "../maquina-de-eventos/maquinadeeventos";
 
 export abstract class Evento {
     refeitorio: Refeitorio;

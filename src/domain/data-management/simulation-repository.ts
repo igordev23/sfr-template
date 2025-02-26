@@ -8,34 +8,31 @@ export class SimulationRepositoryLocalStorage implements SimulationRepositoryI {
 
   async save(simulation: Simulation): Promise<void> {
     try {
-      if (!simulation) {
-        throw new Error("Simulation object is required");
-      }
-      
-      const simulations = await this.getAll();
-      
-      if (!simulation.id) {
-        simulation.id = crypto.randomUUID();
-      }
-      
-      let found = false;
-      for (let i = 0; i < simulations.length; i++) {
-        if (simulations[i].id === simulation.id) {
-          simulations[i] = simulation;
-          found = true;
-          break;
+        if (!simulation) {
+            throw new Error("Simulation object is required");
         }
-      }
-      
-      if (!found) {
-        simulations.push(simulation);
-      }
-      
-      localStorage.setItem(this.storageKey, JSON.stringify(simulations));
+
+        const simulations = await this.getAll();
+
+        if (!simulation.id) {
+            simulation.id = crypto.randomUUID();
+        }
+
+        // Verifica se a simulação já existe
+        const index = simulations.findIndex(s => s.id === simulation.id);
+        if (index !== -1) {
+            simulations[index] = simulation;
+        } else {
+            simulations.push(simulation);
+        }
+
+        // Salva os dados formatados corretamente
+        localStorage.setItem(this.storageKey, JSON.stringify(simulations));
+        console.log(`Simulação salva com sucesso. ID: ${simulation.id}`);
     } catch (error) {
-      throw new Error(`Failed to save simulation: ${error.message}`);
+        throw new Error(`Falha ao salvar a simulação: ${error.message}`);
     }
-  }
+}
 
   async getById(id: string): Promise<Simulation | null> {
     try {
@@ -58,34 +55,38 @@ export class SimulationRepositoryLocalStorage implements SimulationRepositoryI {
 
   async getAll(): Promise<Simulation[]> {
     try {
-      const storedData = localStorage.getItem(this.storageKey);
-      if (!storedData) return [];
-      
-      const parsedData = JSON.parse(storedData);
-      return parsedData.map((data: any) => {
-        if (!data.id || !data.name || !data.parameters) {
-          throw new Error("Invalid simulation data in storage");
-        }
-        return new Simulation(
-          data.id,
-          data.name,
-          new SimulationParameters(
-            data.parameters.param1,
-            data.parameters.param2,
-            data.parameters.param3,
-            data.parameters.param4,
-            data.parameters.param5,
-            data.parameters.param6,
-            data.parameters.param7,
-            data.parameters.param8,
-            data.parameters.mode
-          )
-        );
-      });
+        const storedData = localStorage.getItem(this.storageKey);
+        if (!storedData) return [];
+
+        const parsedData = JSON.parse(storedData);
+
+        return parsedData.map((data: any) => {
+            if (!data.id || !data.name || !data.parameters) {
+                console.warn("Dados inválidos encontrados no armazenamento:", data);
+                return null;
+            }
+
+            return new Simulation(
+                data.id,
+                data.name,
+                new SimulationParameters(
+                    data.parameters.internalQueueLimit,
+                    data.parameters.tableLimit,
+                    data.parameters.registrationTime,
+                    data.parameters.servingTime,
+                    data.parameters.tableTime,
+                    data.parameters.turnstileLimit,
+                    data.parameters.studentCount,
+                    data.parameters.serviceInterval,
+                    data.parameters.arrivalDistribution
+                )
+            );
+        }).filter(sim => sim !== null);
     } catch (error) {
-      throw new Error(`Failed to retrieve all simulations: ${error.message}`);
+        throw new Error(`Falha ao recuperar as simulações: ${error.message}`);
     }
-  }
+}
+
 
   async delete(id: string): Promise<void> {
     try {
