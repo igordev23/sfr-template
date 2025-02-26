@@ -53,7 +53,7 @@ export class Refeitorio {
         TMPSC: number,
         TMPNM: number,
         randomGenerators: RandomGeneratorI[] = [new GaussianRandom()]
-    ) {
+    ): void {
         this.LFI = LFI;
         this.QAL = QAL;
         this.LM = LM;
@@ -68,7 +68,7 @@ export class Refeitorio {
     }
 
 
-    chegadaAluno(matricula: number, distribuidor: RandomGeneratorI = this.randomGenerators[0]) {
+    chegadaAluno(matricula: number, distribuidor: RandomGeneratorI = this.randomGenerators[0]): void {
         const aluno = new Aluno(matricula);
         this.filaExterna.adicionarAluno(aluno);
         console.log(`Aluno ${matricula} chegou e entrou na fila externa.`);
@@ -80,7 +80,7 @@ export class Refeitorio {
         }, tempoChegada * 1000); // Tempo de chegada convertido para milissegundos
     }
 
-    tentarLiberarCatraca() {
+    tentarLiberarCatraca(): void {
         if (this.filaInterna.quantidadeAtual() >= this.LFI) {
             this.catraca.bloquearCatraca();
         }
@@ -99,7 +99,7 @@ export class Refeitorio {
         return this.LFI - this.filaInterna.quantidadeAtual() >= this.QAL;
     }
 
-    moverAlunoParaFilaInterna() {
+    moverAlunoParaFilaInterna(): void {
         const aluno = this.filaExterna.removerAluno();
         if (aluno) {
             const tempoDigitacao = this.randomGenerators[0].next(); // Usando distribuição configurada
@@ -119,12 +119,12 @@ export class Refeitorio {
         }
     }
 
-    iniciarAtendimentoAluno(){
+    iniciarAtendimentoAluno() {
         this.atendimento.iniciarAtendimentoAluno();
     }
 
-     // Métodos para obter o tamanho das filas
-     getTamanhoFilaInterna(): number {
+    // Métodos para obter o tamanho das filas
+    getTamanhoFilaInterna(): number {
         return this.filaInterna.quantidadeAtual();
     }
 
