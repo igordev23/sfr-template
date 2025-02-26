@@ -1,11 +1,15 @@
-import { Evento } from "./event/evento";
+import { Evento } from "../event/evento";
+
+import { Observador } from "../event/observador";  // Importando a classe Observador
 
 export class MaquinaEventos {
     eventos: Evento[] = [];
     instanteDaSimulacao: number;
+    observador: Observador = new Observador() // Adicionando o observador
 
-    constructor(instanteInicial: number = 0) {
+    constructor(instanteInicial: number = 0,) {
         this.instanteDaSimulacao = instanteInicial;
+        // Inicializando o observador
     }
 
     /**
@@ -13,7 +17,7 @@ export class MaquinaEventos {
      */
     processaEventos(): void {
         while (this.eventos.length > 0) {
-            // Ordena os eventos pelo timestamp (caso tenham sido adicionados fora de ordem)
+            // Ordena os eventos pelo timestamp
             this.eventos.sort((a, b) => a.getTimestamp() - b.getTimestamp());
 
             // Remove e processa o próximo evento
@@ -34,10 +38,9 @@ export class MaquinaEventos {
     }
 
     /**
-     * Atualiza o instante da simulação.
-     * @param novoInstante O novo instante a ser definido.
+     * Obtém o instante atual da simulação.
      */
-    atualizaInstanteDeSimulacao(novoInstante: number): void {
-        this.instanteDaSimulacao = novoInstante;
+    getInstanteAtual(): number {
+        return this.instanteDaSimulacao;
     }
 }

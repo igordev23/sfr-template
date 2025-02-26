@@ -1,4 +1,5 @@
 import { Aluno } from "./aluno"
+import { Refeitorio } from "./refeitorio";
 
 /**
  * Classe Atendimento
@@ -7,95 +8,39 @@ import { Aluno } from "./aluno"
  * o aluno sendo atendido, o tempo médio do atendimento e o status (ativo ou inativo).
  */
 export class Atendimento {
-    aluno: Aluno | undefined; // Aluno atualmente sendo atendido
-    tempoMedio: number; // Tempo médio do atendimento em minutos
-    status: boolean; // Indica se o atendimento está ativo (true) ou inativo (false)
+    constructor(private refeitorio: Refeitorio) {}
 
-    /**
-     * Construtor da classe Atendimento.
-     * Inicializa o tempo médio como 0 e o status como falso (inativo).
-     */
-    constructor() {
-        this.tempoMedio = 0;
-        this.status = false;
+    iniciarAtendimentoAluno() {
+        if (this.refeitorio.getFilaInterna().quantidadeAtual() > 0 && this.refeitorio.getMesas().temMesasDisponiveis()) {
+            this.processarAtendimento();
+        }
     }
 
-    /**
-     * Define o tempo médio do atendimento.
-     * @param tempoMedio - Tempo médio do atendimento em minutos.
-     */
-    setTempoMedio(tempoMedio: number): void {
-        this.tempoMedio = tempoMedio;
+    processarAtendimento() {
+        if (!this.refeitorio.getMesas().temMesasDisponiveis()) {
+            console.log("Todas as mesas estão ocupadas. Atendimento pausado.");
+            return;
+        }
+
+        const aluno = this.refeitorio.getFilaInterna().removerAluno();
+        if (aluno) {
+            const tempoServico = this.refeitorio.getTMPNM();
+            setTimeout(() => {
+                if (this.refeitorio.getMesas().ocuparMesa()) {
+                    console.log(`Aluno ${aluno.getMatricula()} pegou comida e está indo para a mesa.`);
+                    this.processarSaidaDaMesa(aluno);
+                }
+            }, tempoServico * 1000);
+        }
     }
 
-    /**
-     * Alterna o status do atendimento entre ativo e inativo.
-     * @param status - Estado atual do atendimento.
-     */
-    mudarStatus(status: boolean): void {
-        this.status = !status;
-    }
-
-    /**
-     * Inicia o atendimento para um aluno específico.
-     * @param aluno1 - O aluno que deseja ser atendido.
-     * @throws Erro caso o aluno informado não esteja sendo atendido ou se não houver aluno para atendimento.
-     */
-    iniciarAtendimento(aluno1: Aluno): void {
-        if (this.aluno != aluno1) {
-            throw Error("Este aluno não está sendo atendido.");
-        }
-        if (this.aluno == undefined) {
-            throw Error("Não há aluno para ser atendido.");
-        }
-        this.mudarStatus(this.status);
-        console.log(`O aluno ${JSON.stringify(this.aluno)} está sendo atendido`);
-    }
-
-    /**
-     * Finaliza o atendimento de um aluno.
-     * @param aluno1 - O aluno cujo atendimento será finalizado.
-     * @throws Erro caso o aluno informado não esteja sendo atendido ou se não houver aluno sendo atendido.
-     */
-    finalizarAtendimento(aluno1: Aluno): void {
-        if (this.aluno != aluno1) {
-            throw Error("Este aluno não está sendo atendido.");
-        }
-        if (this.aluno == undefined) {
-            throw Error("Não há aluno sendo atendido.");
-        }
-        this.aluno = undefined;
-        this.mudarStatus(this.status);
-        console.log("Atendimento finalizado.");
-    }
-
-    /**
-     * Adiciona um aluno ao atendimento.
-     * @param aluno1 - O aluno a ser atendido.
-     * @throws Erro caso já exista um aluno sendo atendido.
-     */
-    adicionarAluno(aluno1: Aluno): void {
-        if (this.aluno != undefined) {
-            throw Error("Existe um aluno sendo atendido.");
-        }
-        this.aluno = aluno1;
-    }
-
-    /**
-     * Remove um aluno do atendimento.
-     * @param aluno1 - O aluno que será removido.
-     * @throws Erro caso o aluno informado não esteja sendo atendido ou se não houver aluno sendo atendido.
-     */
-    removerAluno(aluno1: Aluno): Aluno {
-        if (this.aluno != aluno1) {
-            throw Error("Este aluno não está sendo atendido.");
-        }
-        if (this.aluno == undefined) {
-            throw Error("Não há aluno sendo atendido.");
-        }
-        this.aluno = undefined;
-
-        return aluno1
+    processarSaidaDaMesa(aluno: Aluno) {
+        const tempoPermanencia = this.refeitorio.getTMPNM();
+        setTimeout(() => {
+            this.refeitorio.getMesas().liberarMesa();
+            console.log(`Aluno ${aluno.getMatricula()} terminou sua refeição e liberou uma mesa.`);
+            this.iniciarAtendimentoAluno();
+            this.refeitorio.tentarLiberarCatraca();
+        }, tempoPermanencia * 1000);
     }
 }
-

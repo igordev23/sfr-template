@@ -17,6 +17,6 @@ export class EventoFilaInternaParaAtendimento extends Evento {
      */
     processaEvento(): void {
         console.log(`Processando evento: Aluno movido da fila interna para o atendimento no instante ${this.getTimestamp()}`);
-        this.refeitorio.iniciarAtendimento();
+        this.refeitorio.processaAtendimento();
     }
 }
