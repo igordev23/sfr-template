@@ -30,4 +30,5 @@ export class EventoDigitacaoMatricula extends Evento {
         // Delega a lógica de passagem pela catraca para o Refeitório
         this.refeitorio.moverAlunoParaFilaInterna();
     }
+    
 }
