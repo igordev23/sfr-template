@@ -113,5 +113,6 @@ export class Simulador implements SimulatorI {
         this.simulacao.status = "not_started";
         this.currentProgress = 0;
         console.log("Simulação cancelada.");
+    
     }
 }
