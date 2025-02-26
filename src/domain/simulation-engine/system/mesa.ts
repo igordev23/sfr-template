@@ -1,6 +1,3 @@
-import { ReceiptRussianRuble } from "lucide-react"; // Parece ser uma importação desnecessária, pois não está sendo usada no código.
-import { Aluno } from "./aluno"; // Importação do módulo "Aluno", mas não utilizado na classe.
-
 /**
  * Classe Mesas representa um conjunto de mesas em um refeitório onde alunos podem se sentar.
  * Gerencia a ocupação e liberação das mesas.
