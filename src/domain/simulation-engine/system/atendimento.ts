@@ -14,7 +14,7 @@ export class Atendimento {
      * Inicia o atendimento de um aluno, verificando se há alunos na fila interna
      * e se há mesas disponíveis no refeitório.
      */
-    iniciarAtendimentoAluno() {
+    public iniciarAtendimentoAluno(): void {
         if (this.refeitorio.getFilaInterna().quantidadeAtual() > 0 && this.refeitorio.getMesas().temMesasDisponiveis()) {
             this.processarAtendimento();
         }
@@ -24,7 +24,7 @@ export class Atendimento {
      * Processa o atendimento de um aluno, removendo-o da fila interna e simulando o tempo
      * necessário para pegar a comida. Se não houver mesas disponíveis, pausa o atendimento.
      */
-    processarAtendimento() {
+    public processarAtendimento(): void {
         if (!this.refeitorio.getMesas().temMesasDisponiveis()) {
             console.log("Todas as mesas estão ocupadas. Atendimento pausado.");
             return;
@@ -49,7 +49,7 @@ export class Atendimento {
      * Simula o tempo de permanência do aluno na mesa antes de liberá-la.
      * Após liberar a mesa, verifica se há novos alunos para atender.
      */
-    processarSaidaDaMesa(aluno: Aluno) {
+    public processarSaidaDaMesa(aluno: Aluno): void {
         const tempoPermanencia = this.refeitorio.getTMPNM(); // Obtém o tempo médio que um aluno permanece na mesa.
 
         setTimeout(() => {
