@@ -148,6 +148,9 @@ export class Refeitorio {
         this.mesa.liberarMesa();
         console.log("Uma mesa foi liberada.");
     }
+    public getTempoRegistro(): number {
+        return this.TMPSC;
+    }
 
     // Métodos para obter o tamanho das filas
     getTamanhoFilaInterna(): number {
